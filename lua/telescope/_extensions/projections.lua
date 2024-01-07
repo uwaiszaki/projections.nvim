@@ -20,6 +20,7 @@ local function project_finder(opts)
 				local project = session_info.project
 				if project ~= nil then
 					curr_project_path = project:path()
+					vim.notify("Current Project Path = " .. curr_project_path)
 				end
 			end
 		end
