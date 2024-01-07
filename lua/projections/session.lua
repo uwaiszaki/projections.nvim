@@ -20,21 +20,12 @@ function Session.info(spath)
 	local workspace_path = path:parent()
 	local all_workspaces = Workspace.get_workspaces()
 	local workspace = nil
-	vim.notify("All Workspaces: " .. vim.inspect(all_workspaces))
-	vim.notify("Workspace Path: " .. vim.inspect(workspace_path))
-	vim.notify("Project Name: " .. project_name)
 
 	for _, ws in ipairs(all_workspaces) do
 		if workspace_path == ws.path then
 			workspace = ws
 			break
 		end
-	end
-	if workspace == nil then
-		vim.notify("Workspace is nil")
-	end
-	if workspace ~= nil then
-		vim.notify("Workspace: " .. workspace.path)
 	end
 	if workspace == nil or not workspace:is_project(project_name) then
 		return nil

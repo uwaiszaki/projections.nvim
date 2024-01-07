@@ -9,26 +9,28 @@ local conf = require("telescope.config").values
 local function project_finder(opts)
 	local workspaces = require("projections.workspace").get_workspaces()
 	local projects = {}
-	local curr_project_path = nil
-	local Session = require("projections.session")
-	if Session._ensure_sessions_directory() then
-		local latest_session = Session.latest()
-		if latest_session ~= nil then
-			vim.notify("Current Session = " .. tostring(latest_session))
-			local session_info = Session.info(tostring(latest_session))
-			vim.notify("Current Session Info = " .. vim.inspect(session_info))
-			if session_info ~= nil then
-				local project = session_info.project
-				if project ~= nil then
-					curr_project_path = project:path()
-					vim.notify("Current Project Path = " .. curr_project_path)
-				end
-			end
-		end
-	end
-	if curr_project_path ~= nil then
-		vim.notify("Current Project = " .. curr_project_path)
-	end
+	-- local curr_project_path = nil
+	-- local Session = require("projections.session")
+	-- if Session._ensure_sessions_directory() then
+	-- 	local latest_session = Session.latest()
+	-- 	if latest_session ~= nil then
+	-- 		vim.notify("Current Session = " .. tostring(latest_session))
+	--            local curr_path = Path.new(tostring(latest_session))
+	--            -- local project_name
+	-- 		local session_info = Session.info(tostring(latest_session))
+	-- 		vim.notify("Current Session Info = " .. vim.inspect(session_info))
+	-- 		if session_info ~= nil then
+	-- 			local project = session_info.project
+	-- 			if project ~= nil then
+	-- 				curr_project_path = project:path()
+	-- 				vim.notify("Current Project Path = " .. curr_project_path)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
+	-- if curr_project_path ~= nil then
+	-- 	vim.notify("Current Project = " .. curr_project_path)
+	-- end
 
 	for _, ws in ipairs(workspaces) do
 		for _, project in ipairs(ws:projects()) do
@@ -45,13 +47,13 @@ local function project_finder(opts)
 						items = { { width = 35 }, { remaining = true } },
 						separator = " ",
 					})
-					local project_path = e.value
-					local project_name = e.name
-
-					-- Prepend the symbol if the project is the active session
-					if project_path == curr_project_path then
-						project_name = " -> " .. project_name
-					end
+					-- local project_path = e.value
+					-- local project_name = e.name
+					--
+					-- -- -- Prepend the symbol if the project is the active session
+					-- if project_path == curr_project_path then
+					-- 	project_name = " -> " .. project_name
+					-- end
 					return display({ e.name, { e.value, "Comment" } })
 				end,
 				name = project.name,
