@@ -10,13 +10,15 @@ local function project_finder(opts)
 	local workspaces = require("projections.workspace").get_workspaces()
 	local projects = {}
 	local Session = require("projections.session")
-	local latest_session = Session.latest_session()
-	local session_info = Session.info(latest_session)
+	local latest_session = Session.latest()
 	local curr_project_path = nil
-	if session_info ~= nil then
-		local project = session_info.project
-		if project ~= nil then
-			curr_project_path = project:path()
+	if latest_session ~= nil then
+		local session_info = Session.info(tostring(latest_session))
+		if session_info ~= nil then
+			local project = session_info.project
+			if project ~= nil then
+				curr_project_path = project:path()
+			end
 		end
 	end
 	vim.notify("Current Project = " .. curr_project_path)
