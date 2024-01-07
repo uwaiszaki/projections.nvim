@@ -16,12 +16,11 @@ local function project_finder(opts)
 		vim.notify("Current Session = " .. tostring(latest_session))
 		if latest_session ~= nil then
 			local session_info = Session.info(tostring(latest_session))
-			if session_info ~= nil then
-				local project = session_info.project
-				if project ~= nil then
-					curr_project_path = project:path()
-					vim.notify("Current Project Path = " .. curr_project_path)
-				end
+			vim.notify("Current Session Info = " .. vim.inspect(session_info))
+			local project = session_info.project
+			if project ~= nil then
+				curr_project_path = project:path()
+				vim.notify("Current Project Path = " .. curr_project_path)
 			end
 		end
 	end
