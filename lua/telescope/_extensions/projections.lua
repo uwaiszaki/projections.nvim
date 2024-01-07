@@ -21,7 +21,7 @@ local function project_finder(opts)
 			end
 		end
 	end
-    if curr_project_path == nil then
+    if curr_project_path ~= nil then
       vim.notify("Current Project = " .. curr_project_path)
     end
 
