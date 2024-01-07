@@ -13,8 +13,8 @@ local function project_finder(opts)
 	local Session = require("projections.session")
 	if Session._ensure_sessions_directory() then
 		local latest_session = Session.latest()
-		vim.notify("Current Session = " .. tostring(latest_session))
 		if latest_session ~= nil then
+			vim.notify("Current Session = " .. tostring(latest_session))
 			local session_info = Session.info(tostring(latest_session))
 			vim.notify("Current Session Info = " .. vim.inspect(session_info))
 			local project = session_info.project
