@@ -9,7 +9,16 @@ local conf = require("telescope.config").values
 local function project_finder(opts)
 	local workspaces = require("projections.workspace").get_workspaces()
 	local projects = {}
-	local current_dir = vim.fn.getcwd()
+	local Session = require("projections.session")
+	local latest_session = Session.latest_session()
+	local session_info = Session.info(latest_session)
+	local curr_project_path = nil
+	if session_info ~= nil then
+		local project = session_info.project
+		if project ~= nil then
+			curr_project_path = project:path()
+		end
+	end
 
 	for _, ws in ipairs(workspaces) do
 		for _, project in ipairs(ws:projects()) do
@@ -30,8 +39,8 @@ local function project_finder(opts)
 					local project_name = e.name
 
 					-- Prepend the symbol if the project is the active session
-					if project_path == current_dir then
-						project_name = "-> " .. project_name
+					if project_path == curr_project_path then
+						project_name = " -> " .. project_name
 					end
 					return display({ e.name, { e.value, "Comment" } })
 				end,
