@@ -19,6 +19,7 @@ local function project_finder(opts)
 			curr_project_path = project:path()
 		end
 	end
+	vim.notify("Current Project = " .. curr_project_path)
 
 	for _, ws in ipairs(workspaces) do
 		for _, project in ipairs(ws:projects()) do
@@ -37,6 +38,7 @@ local function project_finder(opts)
 					})
 					local project_path = e.value
 					local project_name = e.name
+					vim.notify("Project Path = " .. project_path)
 
 					-- Prepend the symbol if the project is the active session
 					if project_path == curr_project_path then
