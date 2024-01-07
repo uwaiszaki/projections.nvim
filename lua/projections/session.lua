@@ -21,7 +21,7 @@ function Session.info(spath)
 	local all_workspaces = Workspace.get_workspaces()
 	local workspace = nil
 	-- vim.notify(vim.inspect(all_workspaces))
-	vim.notify("Workspace Path: " .. workspace_path)
+	vim.notify("Workspace Path: " .. vim.inspect(workspace_path))
 	vim.notify("Project Name: " .. project_name)
 
 	for _, ws in ipairs(all_workspaces) do
