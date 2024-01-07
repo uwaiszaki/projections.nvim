@@ -9,15 +9,18 @@ local conf = require("telescope.config").values
 local function project_finder(opts)
 	local workspaces = require("projections.workspace").get_workspaces()
 	local projects = {}
-	local Session = require("projections.session")
-	local latest_session = Session.latest()
 	local curr_project_path = nil
-	if latest_session ~= nil then
-		local session_info = Session.info(tostring(latest_session))
-		if session_info ~= nil then
-			local project = session_info.project
-			if project ~= nil then
-				curr_project_path = project:path()
+	local Session = require("projections.session")
+	if Session._ensure_sessions_directory() then
+		local latest_session = Session.latest()
+		vim.notify("Current Session = " .. tostring(latest_session))
+		if latest_session ~= nil then
+			local session_info = Session.info(tostring(latest_session))
+			if session_info ~= nil then
+				local project = session_info.project
+				if project ~= nil then
+					curr_project_path = project:path()
+				end
 			end
 		end
 	end
