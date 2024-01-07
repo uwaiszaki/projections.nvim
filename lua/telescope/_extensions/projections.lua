@@ -21,7 +21,9 @@ local function project_finder(opts)
 			end
 		end
 	end
-	vim.notify("Current Project = " .. curr_project_path)
+    if curr_project_path == nil then
+      vim.notify("Current Project = " .. curr_project_path)
+    end
 
 	for _, ws in ipairs(workspaces) do
 		for _, project in ipairs(ws:projects()) do
