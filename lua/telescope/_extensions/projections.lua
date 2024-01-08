@@ -10,7 +10,8 @@ local function project_finder(opts)
 	local workspaces = require("projections.workspace").get_workspaces()
 	local projects = {}
 	-- local curr_project_path = nil
-	-- local Session = require("projections.session")
+	local Session = require("projections.session")
+	local curr_project_path, _ = Session.get_current_project_info()
 	-- if Session._ensure_sessions_directory() then
 	-- 	local latest_session = Session.latest()
 	-- 	if latest_session ~= nil then
@@ -51,9 +52,9 @@ local function project_finder(opts)
 					-- local project_name = e.name
 					--
 					-- -- -- Prepend the symbol if the project is the active session
-					-- if project_path == curr_project_path then
-					-- 	project_name = " -> " .. project_name
-					-- end
+					if project_path == curr_project_path then
+						project_name = " -> " .. project_name
+					end
 					return display({ e.name, { e.value, "Comment" } })
 				end,
 				name = project.name,
