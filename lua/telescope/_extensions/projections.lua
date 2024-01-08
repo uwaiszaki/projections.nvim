@@ -96,7 +96,9 @@ local find_projects = function(opts)
 					local selection = action_state.get_selected_entry()
 					if opts.action == nil then
 						opts.action = function(selected)
+							vim.notify("Selected Project: " .. vim.inspect(selected))
 							if selected ~= nil and selected.value ~= vim.loop.cwd() then
+								vim.notify("Switching to Project: " .. selected.name)
 								switcher.switch(selected.value)
 							end
 						end

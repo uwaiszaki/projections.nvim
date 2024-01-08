@@ -7,22 +7,27 @@ local M = {}
 ---@param spath string Path to project root
 ---@return boolean
 M.switch = function(spath)
-    if utils._unsaved_buffers_present() then
-        vim.notify("projections: Unsaved buffers. Unable to switch projects", vim.log.levels.WARN)
-        return false
-    end
+	if utils._unsaved_buffers_present() then
+		vim.notify("projections: Unsaved buffers. Unable to switch projects", vim.log.levels.WARN)
+		return false
+	end
 
-    local session_info = Session.info(spath)
-    if session_info == nil then return false end
+	local session_info = Session.info(spath)
+	vim.notify("Current Session Info = " .. vim.inspect(session_info))
+	if session_info == nil then
+		return false
+	end
 
-    if vim.loop.cwd() ~= spath then Session.store(vim.loop.cwd()) end
-    vim.cmd("noautocmd cd " .. vim.fn.fnameescape(spath))
-    vim.cmd [[
+	if vim.loop.cwd() ~= spath then
+		Session.store(vim.loop.cwd())
+	end
+	vim.cmd("noautocmd cd " .. vim.fn.fnameescape(spath))
+	vim.cmd([[
         silent! %bdelete
         clearjumps
-    ]]
-    Session.restore(spath)
-    return true
+    ]])
+	Session.restore(spath)
+	return true
 end
 
 return M
