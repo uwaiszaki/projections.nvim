@@ -113,7 +113,7 @@ function Session.restore_from_session_file(spath)
 	local current_project = vim.loop.cwd()
 	local session_file = Session.get_current_session_file()
 	vim.fn.writefile({ current_project, spath }, session_file)
-
+	vim.api.nvim_set_current_dir(current_project)
 	return true
 end
 
