@@ -78,9 +78,9 @@ function Session.store_to_session_file(spath)
 	if config.store_hooks.post ~= nil then
 		config.store_hooks.post()
 	end
-	local current_project = vim.loop.cwd()
-	local session_file = Session.get_current_session_file()
-	vim.fn.writefile({ current_project, spath }, session_file)
+	-- local current_project = vim.loop.cwd()
+	-- local session_file = Session.get_current_session_file()
+	-- vim.fn.writefile({ current_project, spath }, session_file)
 
 	return true
 end
