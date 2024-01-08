@@ -13,7 +13,6 @@ M.switch = function(spath)
 	end
 
 	local session_info = Session.info(spath)
-	vim.notify("Current Session Info = " .. vim.inspect(session_info))
 	if session_info == nil then
 		return false
 	end
