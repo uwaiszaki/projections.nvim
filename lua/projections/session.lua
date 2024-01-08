@@ -120,7 +120,7 @@ end
 -- Returns the path to the current session file
 -- @return path to the current session file
 function Session.get_current_session_file()
-	return vim.fn.stdpath("cache") .. "current_session.vim"
+	return vim.fn.stdpath("cache") .. "/current_session.vim"
 end
 
 -- Attempts to read current project info from session file
