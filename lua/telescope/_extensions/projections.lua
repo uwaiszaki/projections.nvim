@@ -48,14 +48,14 @@ local function project_finder(opts)
 						items = { { width = 35 }, { remaining = true } },
 						separator = " ",
 					})
-					-- local project_path = e.value
-					-- local project_name = e.name
+					local project_path = e.value
+					local project_name = e.name
 					--
 					-- -- -- Prepend the symbol if the project is the active session
 					if project_path == curr_project_path then
 						project_name = " -> " .. project_name
 					end
-					return display({ e.name, { e.value, "Comment" } })
+					return display({ project_name, { e.value, "Comment" } })
 				end,
 				name = project.name,
 				value = tostring(project:path()),
