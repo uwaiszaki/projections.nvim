@@ -78,6 +78,10 @@ function Session.store_to_session_file(spath)
 	if config.store_hooks.post ~= nil then
 		config.store_hooks.post()
 	end
+	local current_project = vim.loop.cwd()
+	local session_file = Session.get_current_session_file()
+	vim.fn.writefile({ current_project, spath }, session_file)
+
 	return true
 end
 
@@ -105,25 +109,57 @@ function Session.restore_from_session_file(spath)
 	if config.restore_hooks.post ~= nil then
 		config.restore_hooks.post()
 	end
+
+	local current_project = vim.loop.cwd()
+	local session_file = Session.get_current_session_file()
+	vim.fn.writefile({ current_project, spath }, session_file)
+
 	return true
+end
+
+-- Returns the path to the current session file
+-- @return path to the current session file
+function Session.get_current_session_file()
+	return vim.fn.stdpath("cache") .. "current_session.vim"
+end
+
+-- Attempts to read current project info from session file
+-- Returns nil if session file does not exist
+-- Returns { current_project, spath } if session file exists
+function Session.get_current_project_info()
+	local session_file = Session.get_current_session_file()
+	local file = io.open(session_file, "r") -- Open the file for reading
+	if not file then
+		return nil
+	end
+
+	local current_project = file:read("*l") -- Read the first line for current_project
+	local spath = file:read("*l") -- Read the next line for spath
+
+	file:close() -- Always close the file after you're done
+
+	-- Return the extracted values
+	return current_project, spath
 end
 
 -- Get latest session
 ---@return nil | Path
 ---@nodiscard
 function Session.latest()
-	local latest_session = nil
-	local latest_timestamp = 0
-
-	for _, filename in ipairs(vim.fn.readdir(tostring(config.sessions_directory))) do
-		local session = config.sessions_directory .. filename
-		local timestamp = vim.fn.getftime(tostring(session))
-		if timestamp > latest_timestamp then
-			latest_session = session
-			latest_timestamp = timestamp
-		end
-	end
-	return latest_session
+	local _, spath = Session.get_current_session_file()
+	return spath
+	-- local latest_session = nil
+	-- local latest_timestamp = 0
+	--
+	-- for _, filename in ipairs(vim.fn.readdir(tostring(config.sessions_directory))) do
+	-- 	local session = config.sessions_directory .. filename
+	-- 	local timestamp = vim.fn.getftime(tostring(session))
+	-- 	if timestamp > latest_timestamp then
+	-- 		latest_session = session
+	-- 		latest_timestamp = timestamp
+	-- 	end
+	-- end
+	-- return latest_session
 end
 
 -- Restore latest session
